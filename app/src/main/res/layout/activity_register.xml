@@ -7,12 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.diginals.microlancer.Login">
+    tools:context="com.diginals.microlancer.Register">
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:id="@+id/imageView"
+        android:id="@+id/imageView2"
         android:src="@drawable/linkinpark"
         android:layout_marginTop="58dp"
         android:layout_alignParentTop="true"
@@ -21,13 +21,24 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/editTextt"
         android:layout_marginTop="53dp"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/imageView2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
+        android:hint="Name"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextt2"
+        android:layout_below="@+id/editTextt"
+        android:layout_alignEnd="@+id/editTextt"
+        android:layout_alignParentStart="true"
         android:hint="Email"/>
 
     <EditText
@@ -35,31 +46,31 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_alignEnd="@+id/editText"
+        android:id="@+id/editTextt3"
+        android:layout_below="@+id/editTextt2"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:hint="Password"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText3"
+        android:layout_below="@+id/editTextt3"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/editTextt3"
+        android:hint="Re-Password"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/button"
+        android:text="Register"
+        android:id="@+id/button2"
+        android:layout_below="@+id/editText3"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp"
-        android:layout_below="@+id/editText2"
-        android:layout_centerHorizontal="true"
-        android:onClick="loginclick"
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Don&apos;t have an Account? Register"
-        android:id="@+id/textView"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp" />
+        android:onClick="registerclick"/>
 
 </RelativeLayout>
