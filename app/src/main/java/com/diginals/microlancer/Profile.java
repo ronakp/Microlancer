@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -50,6 +52,8 @@ public class Profile extends FragmentActivity
     TextView name;
     TextView email;
     String uidrec = "";
+    private static final LatLng RBC = new LatLng(43.641143, -79.378187);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,13 +68,11 @@ public class Profile extends FragmentActivity
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                         String a = dataSnapshot.getValue("/users/"+uidrec+"/name");
+                        // String a = dataSnapshot.getValue("/users/"+uidrec+"/name");
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.w(TAG, "getUser:onCancelled", databaseError.toException());
-
                     }
                 });
 
@@ -166,6 +168,18 @@ public class Profile extends FragmentActivity
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.carnotpark)));
         mMap.addMarker(new MarkerOptions().position(new LatLng(42.294081, -83.063202)).title("234 Bapa St.")
                 .icon(BitmapDescriptorFactory.fromResource(R.mipmap.carnotpark)));*/
+        /*Uri gmmIntentUri = Uri.parse("geo:43.641143, -79.378187");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);*/
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(RBC, 10));
+        // Add a camera idle listener.
+       /* mMap.setOnCameraIdleListener(new OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                mMessageView.setText("CameraChangeListener: " + mMap.getCameraPosition());
+            }
+        });*/
     }
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
