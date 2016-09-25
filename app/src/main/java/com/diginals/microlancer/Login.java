@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Intent mapIntent = new Intent(getApplicationContext(), Map.class);
+                            Intent mapIntent = new Intent(getApplicationContext(), Profile.class);
                             startActivity(mapIntent);
                         }
                     }
