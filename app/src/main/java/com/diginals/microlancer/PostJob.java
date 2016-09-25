@@ -194,6 +194,8 @@ public class PostJob extends AppCompatActivity implements View.OnClickListener {
 
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
+        String key = mDatabase.child("jobs").push().getKey();
+
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
@@ -203,10 +205,12 @@ public class PostJob extends AppCompatActivity implements View.OnClickListener {
         java.util.Map<String, Object> postValues = job.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/jobs/", postValues);
-
+        childUpdates.put("/jobs/" + key, postValues);
 
         mDatabase.updateChildren(childUpdates);
+
+
+
     }
 
 }
