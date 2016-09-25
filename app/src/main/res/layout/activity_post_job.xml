@@ -3,7 +3,8 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="fill_parent"
 android:layout_height="fill_parent"
-android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
+android:fillViewport="true"
+    > <!--IMPORTANT otherwise backgrnd img. will not fill the whole screen -->
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -29,7 +30,7 @@ android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Title"
+        android:hint="Title"
         android:ems="10"
         android:layout_below="@+id/textView3"
         android:layout_alignParentStart="true"
@@ -43,51 +44,70 @@ android:fillViewport="true"> <!--IMPORTANT otherwise backgrnd img. will not fill
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/editText9"
-        android:text="Description"
-        android:lines="3"
+        android:hint="Description"
+        android:lines="1"
         android:layout_below="@+id/editText8"
         android:layout_alignParentStart="true"
         android:layout_marginTop="11dp"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:layout_marginBottom="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:layout_below="@+id/spinner6"
+        android:layout_marginTop="26dp"
+        android:id="@+id/editText11"
+        android:text="Date" />
+
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner4"
         android:entries="@array/wage_arrays"
         android:prompt="@string/wage_prompt"
+        android:layout_marginTop="13dp"
         android:layout_below="@+id/editText9"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="14dp" />
+        android:layout_alignStart="@+id/button3"
+        android:layout_marginStart="45dp" />
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinner6"
-        android:layout_centerVertical="true"
         android:entries="@array/payment_arrays"
         android:prompt="@string/payment_prompt"
-        android:layout_alignParentStart="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/spinner4" />
 
     <TextView
-        android:text="Date"
+        android:text="Wage Type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinner6"
+        android:layout_alignTop="@+id/spinner4"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp"
-        android:id="@+id/textView4"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="16sp" />
+        android:id="@+id/textView6"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18sp" />
 
-    <DatePicker
+    <TextView
+        android:text="Payment Type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/editText9"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="78dp"
-        android:layout_marginTop="66dp"
-        android:id="@+id/datePicker3" />
+        android:layout_alignTop="@+id/spinner6"
+        android:id="@+id/textView7"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:textSize="18sp" />
 
 
 </RelativeLayout>

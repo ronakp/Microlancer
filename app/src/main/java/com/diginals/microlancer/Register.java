@@ -15,13 +15,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText name2;
     EditText email2;
     EditText password2;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    String TAG = "DebugPoint";
+    String uid = "";
+    FirebaseAuth.AuthStateListener mAuthListener;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,20 +36,17 @@ public class Register extends AppCompatActivity {
         name2 = (EditText)findViewById(R.id.editTextt);
         email2 = (EditText)findViewById(R.id.editTextt2);
         password2 = (EditText)findViewById(R.id.editTextt3);
-
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
-                    Log.d("df", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
-                    // User is signed out
-                    Log.d("fd", "onAuthStateChanged:signed_out");
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
-                // [END_EXCLUDE]
             }
         };
     }
@@ -53,17 +56,21 @@ public class Register extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Firebase Register", "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Register.this, "Register Failed",
+                                Toast.makeText(Register.this, "Registration Failed",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
+                        else
+                        {
+                            Toast.makeText(Register.this, "Registration Sucessfull",
+                                    Toast.LENGTH_SHORT).show();
+                            uid = mAuth.getCurrentUser().getUid();
+                            myRef.child("users").child(uid).child("name").setValue(name2.getText().toString());
+                            myRef.child("users").child(uid).child("email").setValue(email2.getText().toString());
+                            Intent loginIntent = new Intent(getApplicationContext(), Login.class);
+                            startActivity(loginIntent);
+                        }
                     }
                 });
     }

@@ -20,8 +20,9 @@ public class Login extends AppCompatActivity {
     EditText email;
     EditText password;
     TextView registerlink;
-     FirebaseAuth mAuth;
-     FirebaseAuth.AuthStateListener mAuthListener;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthListener;
+    String TAG = "DebugPoint";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,14 +44,12 @@ public class Login extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
-                    Log.d("df", "onAuthStateChanged:signed_in:" + user.getUid());
+                    //Intent mapIntent2 = new Intent(getApplicationContext(), Profile.class);
+                    //startActivity(mapIntent2);
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                 } else {
-                    // User is signed out
-                    Log.d("fd", "onAuthStateChanged:signed_out");
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
-                // [START_EXCLUDE]
-                // [END_EXCLUDE]
             }
         };
     }
@@ -74,15 +73,14 @@ public class Login extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("Test Firebase", "signInWithEmail:onComplete:" + task.isSuccessful());
-
+                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
                         if (!task.isSuccessful()) {
-                            Log.w("Test Firebase", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(Login.this, "adhsfe",
+                            Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(Login.this, "Login Failed",
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Intent mapIntent = new Intent(getApplicationContext(), Map.class);
+                            Intent mapIntent = new Intent(getApplicationContext(), Profile.class);
                             startActivity(mapIntent);
                         }
                     }

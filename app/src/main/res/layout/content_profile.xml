@@ -12,4 +12,9 @@
     tools:context="com.diginals.microlancer.Profile"
     tools:showIn="@layout/app_bar_profile">
 
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment" />
 </RelativeLayout>
