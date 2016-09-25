@@ -155,6 +155,7 @@ public class PostJob extends AppCompatActivity implements View.OnClickListener {
                         } else {
                             // Write new post
                             writeNewPost(jobPostingTitle, description, payment6, wage4, workDate, location, user);
+                            Toast.makeText(PostJob.this, "Success: Job posted!", Toast.LENGTH_SHORT).show();
                         }
 
                         // Finish this Activity, back to the stream
