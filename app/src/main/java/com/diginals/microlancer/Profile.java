@@ -2,6 +2,7 @@ package com.diginals.microlancer;
 
 import android.*;
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -27,40 +30,64 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 public class Profile extends FragmentActivity
         implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener,
         GoogleMap.OnMyLocationButtonClickListener, ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
     private GoogleMap mMap;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    String TAG = "DebugPoint";
+    TextView name;
+    TextView email;
+    String uidrec = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        name = (TextView) findViewById(R.id.textVieww2);
+        email = (TextView) findViewById(R.id.textView);
+        Intent intent = getIntent();
+        uidrec = intent.getStringExtra(Login.EXTRA_MSG);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        myRef.child("users").child(uidrec).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                         String a = dataSnapshot.getValue("/users/"+uidrec+"/name");
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+
+                    }
+                });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map1);
         mapFragment.getMapAsync(this);
+
+
     }
 
     @Override
@@ -79,11 +106,6 @@ public class Profile extends FragmentActivity
         getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Park Confirmed", Toast.LENGTH_SHORT).show();
-       // marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.carpark));
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,23 +122,26 @@ public class Profile extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Park Confirmed", Toast.LENGTH_SHORT).show();
+        // marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.carpark));
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.home) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.postjob) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.history) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.settings) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.logout) {
 
         }
 
@@ -156,7 +181,6 @@ public class Profile extends FragmentActivity
     }
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
         return false;
     }
 

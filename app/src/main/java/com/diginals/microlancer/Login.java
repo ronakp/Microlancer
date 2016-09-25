@@ -20,6 +20,8 @@ public class Login extends AppCompatActivity {
     EditText email;
     EditText password;
     TextView registerlink;
+    String uid = "";
+    public final static String EXTRA_MSG = "com.diginals.microlancer";
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
     String TAG = "DebugPoint";
@@ -80,7 +82,9 @@ public class Login extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                         else {
+                            uid = mAuth.getCurrentUser().getUid();
                             Intent mapIntent = new Intent(getApplicationContext(), Profile.class);
+                            mapIntent.putExtra(EXTRA_MSG,uid);
                             startActivity(mapIntent);
                         }
                     }
