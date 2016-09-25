@@ -14,14 +14,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
     EditText email;
     EditText password;
     TextView registerlink;
-    FirebaseAuth mAuth;
-
-    private FirebaseAuth.AuthStateListener mAuthListener;
+     FirebaseAuth mAuth;
+     FirebaseAuth.AuthStateListener mAuthListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,18 +38,52 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d("df", "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d("fd", "onAuthStateChanged:signed_out");
+                }
+                // [START_EXCLUDE]
+                // [END_EXCLUDE]
+            }
+        };
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     public void loginclick(View v){
-        mAuth.signInWithEmailAndPassword(email.toString(), password.toString())
+        mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("Test Firebase", "signInWithEmail:onComplete:" + task.isSuccessful());
+
                         if (!task.isSuccessful()) {
                             Log.w("Test Firebase", "signInWithEmail:failed", task.getException());
                             Toast.makeText(Login.this, "adhsfe",
                                     Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Intent mapIntent = new Intent(getApplicationContext(), Map.class);
+                            startActivity(mapIntent);
                         }
                     }
                 });
