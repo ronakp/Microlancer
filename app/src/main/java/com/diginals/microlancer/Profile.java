@@ -138,13 +138,15 @@ public class Profile extends FragmentActivity
         if (id == R.id.home) {
 
         } else if (id == R.id.postjob) {
-
+            /*Intent postjobint = new Intent(this, PostJob.class);
+            startActivity(postjobint);*/
         } else if (id == R.id.history) {
 
         } else if (id == R.id.settings) {
 
         } else if (id == R.id.logout) {
-
+            Intent logoutint = new Intent(this, Login.class);
+            startActivity(logoutint);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
