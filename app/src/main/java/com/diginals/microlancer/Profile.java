@@ -138,8 +138,8 @@ public class Profile extends FragmentActivity
         if (id == R.id.home) {
 
         } else if (id == R.id.postjob) {
-            /*Intent postjobint = new Intent(this, PostJob.class);
-            startActivity(postjobint);*/
+            Intent postjobint = new Intent(this, PostJob.class);
+            startActivity(postjobint);
         } else if (id == R.id.history) {
 
         } else if (id == R.id.settings) {
